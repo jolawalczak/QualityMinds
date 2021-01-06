@@ -25,4 +25,8 @@ Feature: QualityMinds Navigation
     And Click on Karriere
     And Click on Bewirb
     And Click on Jetzt
-
+    Then Verify if validation messages are displayed
+    And Fill the Vorname and Nachname field
+    And Click on Jetzt
+    Then Verify if validation messages are displayed
+    And Fill the Email field

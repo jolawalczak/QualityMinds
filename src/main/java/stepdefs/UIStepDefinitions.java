@@ -106,4 +106,20 @@ public class UIStepDefinitions {
         ApplicationForm.clickJetz();
     }
 
+    @Then("^Verify if validation messages are displayed$")
+    public void verify_if_validation_messages_are_displayed() {
+        ApplicationForm.validationMessages();
+    }
+
+    @And("^Fill the Vorname and Nachname field$")
+    public void fill_the_vorname_and_nachname_field() {
+        ApplicationForm.fillFieldsVorNach();
+    }
+
+    @And("^Fill the Email field$")
+    public void fill_the_email_field() {
+        ApplicationForm.fillFieldsEmail();
+    }
+
+
 }
