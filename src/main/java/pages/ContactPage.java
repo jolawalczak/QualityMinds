@@ -7,18 +7,18 @@ import utilities.BasePage;
 @Slf4j
 public class ContactPage extends BasePage {
 
+    private static String xpathKontaktAnfraht = "//span[text()=\"Kontakt & Anfahrt\"]";
+    private static String xpathEmail = "//a[text()=\"hello@qualityminds.de\"]";
 
     public static void contactPage() {
 
-        xpath = "//span[text()=\"Kontakt & Anfahrt\"]";
-        waitForElement(xpath, 5);
+        wait5(xpathKontaktAnfraht);
         log.info("Kontakt & Anfahrt page is displayed");
     }
 
     public static void verifyEmail() {
 
-        xpath = "//a[text()=\"hello@qualityminds.de\"]";
-        driver.findElement(By.xpath("//a[text()=\"hello@qualityminds.de\"]"));
+        driver.findElement(By.xpath(xpathEmail));
         log.info("Page contains hello@qualityminds.de email address");
 
     }

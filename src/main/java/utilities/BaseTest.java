@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
@@ -32,6 +33,9 @@ public class BaseTest {
 
 
                 properties.setProperty("browser.version", ((RemoteWebDriver)driver).getCapabilities().getVersion());
+
+                driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+                driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
                 driver.manage().window().maximize();
         }
 

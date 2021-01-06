@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,16 +15,31 @@ import javax.xml.xpath.XPath;
 public class BasePage {
 
     protected static WebDriver driver = BaseTest.getDriver();
-    public static WebDriverWait waitShort = new WebDriverWait(driver, 10);
-    protected static String xpath = null;
+    public static WebDriverWait wait5 = new WebDriverWait(driver, 5);
+    public static WebDriverWait wait15 = new WebDriverWait(driver, 15);
+    public static WebDriverWait wait30 = new WebDriverWait(driver, 30);
+    protected static Actions builder = new Actions(driver);
 
-    public static void waitForElement(String xpath, int seconds) {
 
-        if (seconds!=10) {
-            waitShort = new WebDriverWait(driver, seconds);
-        }
+    public static void wait5(String xpath) {
         try {
-            waitShort.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+            wait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        } catch (Exception e) {
+            log.info(e.toString());
+        }
+    }
+
+    public static void wait15(String xpath) {
+        try {
+            wait15.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        } catch (Exception e) {
+            log.info(e.toString());
+        }
+    }
+
+    public static void wait5Multi(String xpath) {
+        try {
+            wait5.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
         } catch (Exception e) {
             log.info(e.toString());
         }
