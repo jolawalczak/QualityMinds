@@ -20,14 +20,14 @@ public class UIStepDefinitions {
         MainPage.mainPage(url);
     }
 
-    @And("^Click on Kontact$")
-    public void click_on_kontact() {
+    @And("^Click on Kontakt$")
+    public void click_on_kontakt() {
         MainPage.clickKontact();
         ContactPage.contactPage();
     }
 
     @Then("Verify if the page contains email address")
-    public void verify_if_the_page_contains_email_address() {
+    public void verify_if_the_page_contains_email_address() throws InterruptedException {
         ContactPage.verifyEmail();
         String sourcePageStep2 = BasePage.returnSourcePage();
     }
@@ -42,7 +42,8 @@ public class UIStepDefinitions {
     @And("^Click on Kontakt & ANFAHRT$")
     public void click_on_kontakt_anfahrt() {
         MainPage.clickKontaktAnfraht();
-        ContactPage.navigateBack();
+        ContactPage.contactPage();
+
     }
 
     @Then("^Verify if the page displayed$")

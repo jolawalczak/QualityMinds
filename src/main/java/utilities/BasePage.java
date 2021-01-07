@@ -3,21 +3,18 @@ package utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.xml.xpath.XPath;
+import java.awt.*;
 
 @Slf4j
-public class BasePage {
+public class BasePage extends BaseTest {
 
-    protected static WebDriver driver = BaseTest.getDriver();
+    //protected static WebDriver driver = BaseTest.getDriver();
     public static WebDriverWait wait5 = new WebDriverWait(driver, 5);
     public static WebDriverWait wait15 = new WebDriverWait(driver, 15);
-    public static WebDriverWait wait30 = new WebDriverWait(driver, 30);
     protected static Actions builder = new Actions(driver);
 
 
@@ -48,6 +45,12 @@ public class BasePage {
     public static String returnSourcePage() {
         String sourcePage = driver.getPageSource();
         return sourcePage;
+    }
+
+    public static Robot robot() throws AWTException {
+        Robot robot = new Robot();
+        robot.delay(3000);
+        return robot;
     }
 
 }

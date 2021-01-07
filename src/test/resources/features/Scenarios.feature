@@ -2,8 +2,8 @@ Feature: QualityMinds Navigation
 
   @Test1
   Scenario: Test case 1
-    Given A user go to main page
-    And Click on contact
+    Given Go to www.qualityminds.de URL
+    And Click on Kontakt
     Then Verify if the page contains email address
     And Navigate back to main page
     And Click on Kontakt & ANFAHRT
@@ -11,7 +11,7 @@ Feature: QualityMinds Navigation
 
   @Test2
   Scenario: Test case 2
-    Given A user go to main page
+    Given Go to www.qualityminds.de URL
     And Go to Portfolio and verify
     And Click on Web
     Then Verify that the Portfolio is highlighted
@@ -21,7 +21,7 @@ Feature: QualityMinds Navigation
 
   @Test3
   Scenario: Test case 3
-    Given A user go to main page
+    Given Go to www.qualityminds.de URL
     And Click on Karriere
     And Click on Bewirb
     And Click on Jetzt
@@ -30,3 +30,6 @@ Feature: QualityMinds Navigation
     And Click on Jetzt
     Then Verify if validation messages are displayed
     And Fill the Email field
+    And Click on Jetzt
+    And Attach file
+    Then Check the checkbox

@@ -5,7 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import utilities.BasePage;
 
-import java.util.List;
+import java.awt.*;
+
+import static utilities.UploadFile.uploadFile;
 
 @Slf4j
 public class ApplicationForm extends BasePage {
@@ -17,6 +19,12 @@ public class ApplicationForm extends BasePage {
     private static String xpathVorname = "//input[@placeholder=\"Vorname*\"]";
     private static String xpathNachname = "//input[@placeholder=\"Nachname*\"]";
     private static String xpathEmail = "//input[@placeholder=\"Email*\"]";
+    private static String xpathDateinHochladen = "//button[text()=\"Dateien hochladen\"]";
+    private static String xpathRemoveFile = "//button/span[text()=\"Remove file\"]";
+    private static String xpathUploadFileName = "//span[contains(@class,\"file-name\")]";
+    private static String xpathCheckbox = "//input[@type=\"checkbox\"]";
+
+    private static String fileName = "text.txt";
 
     public static void applicationForm() {
 
@@ -61,7 +69,7 @@ public class ApplicationForm extends BasePage {
         String nachnameS = "Yyyyy";
 
         String valueVorname = fillField(vornameS,xpathVorname);
-        String valueNachname = fillField(xpathNachname,xpathNachname);
+        String valueNachname = fillField(nachnameS,xpathNachname);
 
         if (valueVorname.equals(vornameS) && valueNachname.equals(nachnameS)) {
             log.info("Fields are filled");
@@ -82,10 +90,52 @@ public class ApplicationForm extends BasePage {
     }
 
     public static String fillField(String value, String xpath) {
-        WebElement vorname = driver.findElement(By.xpath(xpath));
-        vorname.sendKeys(value);
-        return vorname.getAttribute("value");
+        WebElement webElement = driver.findElement(By.xpath(xpath));
+        webElement.sendKeys(value);
+        return webElement.getAttribute("value");
     }
+
+    public static void attachFile() throws AWTException {
+
+        driver.findElement(By.xpath(xpathDateinHochladen)).click();
+        //driver.findElement(By.xpath(xpathDateinHochladen)).sendKeys(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\text.txt");
+        log.info("Click on button Datein Hochladen");
+
+        uploadFile(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\" + fileName, robot());
+        log.info("Upload file " + fileName);
+
+    }
+
+    public static boolean checkFileName() {
+
+        boolean checkFileName = false;
+        wait15(xpathRemoveFile);
+
+        String uploadFileName = driver.findElement(By.xpath(xpathUploadFileName)).getText();
+        log.info("Name of upload file " + uploadFileName);
+
+        if (uploadFileName.equals(fileName)) {
+            log.info("Filename of attachment is displayed above DATEIN HOCHLANDEN button");
+            checkFileName=true;
+        }
+
+        return checkFileName;
+    }
+
+    public static boolean checkCheckbox() {
+
+        boolean checkCheckbox = false;
+
+        driver.findElement(By.xpath(xpathCheckbox)).click();
+        if (driver.findElement(By.xpath(xpathCheckbox)).getAttribute("checked").equals("true")) {
+            log.info("Checkbox is checked");
+            checkCheckbox = true;
+        }
+
+        return checkCheckbox;
+    }
+
+
 
 
 

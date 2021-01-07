@@ -1,6 +1,7 @@
 package utilities;
 
 import browsers.Chrome;
+import browsers.Firefox;
 import io.cucumber.core.api.Scenario;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,11 +10,11 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-        @Setter @Getter private static WebDriver driver;
+        @Setter @Getter
+        protected static WebDriver driver;
         protected static String browser;
         protected static GetProperties getProperties;
 
@@ -23,19 +24,15 @@ public class BaseTest {
                 Properties properties = getProperties.getProperties();
                 browser = properties.getProperty("browser");
 
-                if (browser.equalsIgnoreCase("chrome")) {
-                        driver = Chrome.getDriver();
-                }
-
-//                if (browser.equalsIgnoreCase("firefox")) {
-//                        driver = Chrome.getDriver();
+//                switch (browser) {
+//                        case "chrome" : driver = Chrome.getDriver();
+//                        case "firefox" : driver = Firefox.getDriver();
 //                }
 
+                if (browser.equalsIgnoreCase("chrome")) {driver = Chrome.getDriver();}
+                if (browser.equalsIgnoreCase("firefox")) {driver = Firefox.getDriver();}
 
                 properties.setProperty("browser.version", ((RemoteWebDriver)driver).getCapabilities().getVersion());
-
-                driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-                driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
                 driver.manage().window().maximize();
         }
 

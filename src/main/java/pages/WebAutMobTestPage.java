@@ -1,5 +1,6 @@
 package pages;
 
+import io.cucumber.java8.Ro;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -15,6 +16,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import static utilities.UploadFile.uploadFile;
 
 
 @Slf4j
@@ -41,7 +44,8 @@ public class WebAutMobTestPage extends BasePage {
         Boolean verifyPortfolioHighlighted = false;
 
         String color = driver.findElement(By.xpath(xpathPortfolio)).getCssValue("color");
-        if (color.equals("rgba(130, 186, 69, 1)")) {
+        System.out.println(color);
+        if (color.contains("130, 186, 69")) {
             verifyPortfolioHighlighted = true;
         };
 
@@ -65,7 +69,7 @@ public class WebAutMobTestPage extends BasePage {
 
         Boolean mobileGrey = false;
         String color = driver.findElement(By.xpath(xpathUnderlieMobile)).getCssValue("border-bottom-color");
-        if(color.equals("rgba(151, 151, 151, 1)")) {
+        if(color.contains("151, 151, 151")) {
             mobileGrey=true;
             log.info("\"Mobile\" is underlined in grey");
         } else {log.info("\"Mobile\" is not underlined in grey");}
@@ -86,30 +90,30 @@ public class WebAutMobTestPage extends BasePage {
         return downloadlink;
     }
 
-    public static Boolean file() throws InterruptedException, AWTException {
+    public static Boolean file() {
 
         Boolean file = false;
         driver.get("https://qualityminds.de/app/uploads/2018/11/Find-The-Mobile-Bug-Session.pdf");
         log.info("Go to dowloaded link");
 
-        try {
-            Robot object = new Robot();
-            object.keyPress(KeyEvent.VK_ENTER);
-            object.keyRelease(KeyEvent.VK_ENTER);
-            log.info("Accept system popup save-as");
-        } catch (Exception e) {
-            log.info("Not visible system popup save-as");
-        }
+//        try {
+//            robot().keyPress(KeyEvent.VK_ENTER);
+//            robot().keyRelease(KeyEvent.VK_ENTER);
+//            log.info("Accept system popup save-as");
+//        } catch (Exception e) {
+//            log.info("Not visible system popup save-as");
+//        }
 
         try {
 
+            //File folder = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\");
             File folder = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\");
             File[] listOfFiles = folder.listFiles();
             String fileName;
 
 
             int count = 0;
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             do {
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].isFile()) {
@@ -120,6 +124,8 @@ public class WebAutMobTestPage extends BasePage {
                             count = 10;
                             file = true;
 
+                            listOfFiles[i].delete();
+
                         } else {
                             count++;
                         }
@@ -128,8 +134,8 @@ public class WebAutMobTestPage extends BasePage {
                 Thread.sleep(1000);
             } while (listOfFiles.length == 0 || count < 10);
 
-        } catch (Exception ee) {
-            System.out.println(ee);
+        } catch (Exception e) {
+            log.info(e.toString());
         }
 
         return file;

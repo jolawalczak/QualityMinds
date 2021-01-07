@@ -20,7 +20,7 @@ public class KarrierePage extends BasePage {
     public static void bawirbButton() {
 
         driver.findElements(By.xpath(xpathBewirb)).get(1).click();
-        log.info("A Karriere page is displayed");
+        log.info("Click on Bewirb Ditch Jetzt! button");
 
     }
 

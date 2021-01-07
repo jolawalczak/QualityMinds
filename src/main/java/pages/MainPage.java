@@ -1,9 +1,7 @@
 package pages;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
 import utilities.BasePage;
 
 @Slf4j
@@ -18,10 +16,9 @@ public class MainPage extends BasePage {
     private static String xpathKarriere = "//ul[@id=\"top-menu\"]//a[text()=\"Karriere\"]";
 
 
-    public static void mainPage() {
+    public static void mainPage(String url) {
 
-        String url = "https://qualityminds.de/";
-        driver.get(url);
+        driver.get("https://" + url);
 
         wait15(xpathImg);
         log.info("QualityMinds page is opened");
@@ -48,16 +45,20 @@ public class MainPage extends BasePage {
         log.info("Click on \"Kontakt & Anfahrt\"");
     }
 
-    public static Boolean goToPortfolio() {
+    public static Boolean goToPortfolio() throws InterruptedException {
+        Boolean display=false;
 
-        wait5(xpathPortfolio);
+            wait5(xpathPortfolio);
 
-        builder.moveToElement(driver.findElement(By.xpath(xpathPortfolio))).build().perform();
-        log.info("Hover on Portfolio at the top navigation bar of the page");
+            builder.moveToElement(driver.findElement(By.xpath(xpathPortfolio))).build().perform();
+            log.info("Hover on Portfolio at the top navigation bar of the page");
+            display = driver.findElement(By.xpath(xpathPortfolioSubmenu)).isDisplayed();
+            if (display) {
+                log.info("Submenu is displayed");
+            } else {
+                log.info("Submenu is not displayed");
+            }
 
-        Boolean display = driver.findElement(By.xpath(xpathPortfolioSubmenu)).isDisplayed();
-        if (display) {log.info("Submenu is displayed");}
-        else {log.info("Submenu is not displayed");}
 
         return display;
     }

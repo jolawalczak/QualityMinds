@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
-        <browser>chrome</browser>
+        <browser>firefox</browser>
     </properties>
 
     <build>
