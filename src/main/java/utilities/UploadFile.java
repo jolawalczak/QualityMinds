@@ -15,14 +15,21 @@ public class UploadFile {
     public static void uploadFile(String fileLocation, Robot robot) {
 
         try {
+
             setClipboardData(fileLocation);
 
             robot.keyPress(KeyEvent.VK_CONTROL);
             robot.keyPress(KeyEvent.VK_V);
             robot.keyRelease(KeyEvent.VK_V);
+            robot.delay(3000);
             robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.delay(3000);
             robot.keyPress(KeyEvent.VK_ENTER);
+            robot.delay(3000);
             robot.keyRelease(KeyEvent.VK_ENTER);
+            robot.delay(3000);
+            robot.keyPress(KeyEvent.VK_ENTER);
+
         } catch (Exception e) {
             log.info(e.toString());
         }

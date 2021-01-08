@@ -15,10 +15,8 @@ public class Hook extends BaseTest{
     }
 
 
-
     @After
     public static void tearDownTest(Scenario scenario) throws IOException {
-        //DeleteFiles.deleteFile();
         stopDriver();
     }
 

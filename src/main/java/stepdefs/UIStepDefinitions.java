@@ -20,32 +20,32 @@ public class UIStepDefinitions {
         MainPage.mainPage(url);
     }
 
-    @And("^Click on Kontact$")
+    @And("^Click on Kontakt$")
     public void click_on_kontact() {
         MainPage.clickKontact();
-        ContactPage.contactPage();
+        KontaktPage.kontaktPage();
     }
 
-    @Then("Verify if the page contains email address")
-    public void verify_if_the_page_contains_email_address() {
-        ContactPage.verifyEmail();
+    @Then("Verify if the page contains email address (.*)")
+    public void verify_if_the_page_contains_email_address(String emailaddress) {
+        KontaktPage.verifyEmail(emailaddress);
         String sourcePageStep2 = BasePage.returnSourcePage();
     }
 
 
     @And("^Navigate back to main page$")
     public void navigate_back_to_main_page() {
-        ContactPage.navigateBack();
+        KontaktPage.navigateBack();
         MainPage.mainPageDisplayed();
     }
 
     @And("^Click on Kontakt & ANFAHRT$")
     public void click_on_kontakt_anfahrt() {
         MainPage.clickKontaktAnfraht();
-        ContactPage.navigateBack();
+        KontaktPage.navigateBack();
     }
 
-    @Then("^Verify if the page displayed$")
+    @Then("^Verify if the page displayed in step 2 is the same page that is displayed in step 5$")
     public void verify_if_the_page_displayed() {
         String sourcePageStep5 = BasePage.returnSourcePage();
         assertThat(sourcePageStep2).isEqualTo(sourcePageStep2);
@@ -53,7 +53,7 @@ public class UIStepDefinitions {
 
     @And("^Go to Portfolio and verify$")
     public void go_to_portfolio_and_verify() throws InterruptedException {
-        Boolean display = MainPage.goToPortfolio();
+        boolean display = MainPage.goToPortfolio();
         assertThat(display).isEqualTo(true);
     }
 
@@ -65,14 +65,14 @@ public class UIStepDefinitions {
 
     @Then("^Verify that the Portfolio is highlighted$")
     public void verify_that_the_portfolio_is_highlighted() {
-        Boolean verify = WebAutMobTestPage.verifyPortfolioHighlighted();
+        boolean verify = WebAutMobTestPage.verifyPortfolioHighlighted();
         assertThat(verify).isEqualTo(true);
     }
 
     @And("^Click on Mobile tab$")
     public void click_on_mobile_tab() {
         WebAutMobTestPage.clickMobile();
-        Boolean mobile = WebAutMobTestPage.mobile();
+        boolean mobile = WebAutMobTestPage.mobile();
         assertThat(mobile).isEqualTo(true);
     }
 
@@ -84,7 +84,7 @@ public class UIStepDefinitions {
 
     @Then("^Verify if file is available$")
     public void verify_if_file_is_available() throws InterruptedException, AWTException {
-        Boolean file = WebAutMobTestPage.file();
+        boolean file = WebAutMobTestPage.file();
         assertThat(file).isEqualTo(true);
     }
 

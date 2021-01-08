@@ -24,11 +24,6 @@ public class BaseTest {
                 Properties properties = getProperties.getProperties();
                 browser = properties.getProperty("browser");
 
-//                switch (browser) {
-//                        case "chrome" : driver = Chrome.getDriver();
-//                        case "firefox" : driver = Firefox.getDriver();
-//                }
-
                 if (browser.equalsIgnoreCase("chrome")) {driver = Chrome.getDriver();}
                 if (browser.equalsIgnoreCase("firefox")) {driver = Firefox.getDriver();}
 

@@ -14,7 +14,6 @@ public class GetProperties {
         properties = new Properties();
         String fileName = "test.properties";
 
-
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
             properties.load(inputStream);
@@ -23,9 +22,5 @@ public class GetProperties {
         }
         return properties;
     }
-
-//    public Properties loadFromProperties(){
-//        return properties = getProperties();
-//    }
 
 }

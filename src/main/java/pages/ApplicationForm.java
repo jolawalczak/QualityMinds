@@ -98,7 +98,6 @@ public class ApplicationForm extends BasePage {
     public static void attachFile() throws AWTException {
 
         driver.findElement(By.xpath(xpathDateinHochladen)).click();
-        //driver.findElement(By.xpath(xpathDateinHochladen)).sendKeys(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\text.txt");
         log.info("Click on button Datein Hochladen");
 
         uploadFile(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\" + fileName, robot());
@@ -131,12 +130,7 @@ public class ApplicationForm extends BasePage {
             log.info("Checkbox is checked");
             checkCheckbox = true;
         }
-
         return checkCheckbox;
     }
-
-
-
-
 
 }

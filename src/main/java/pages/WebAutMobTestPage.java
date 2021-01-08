@@ -1,28 +1,14 @@
 package pages;
 
-import io.cucumber.java8.Ro;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
 import utilities.BasePage;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import static utilities.UploadFile.uploadFile;
-
 
 @Slf4j
 public class WebAutMobTestPage extends BasePage {
-
 
     private static String xpathTextWebAutMobTest = "//span[text()=\"Web, Automation & Mobile Testing\"]";
     private static String xpathPortfolio = "//ul[@id=\"top-menu\"]//a[text()=\"Portfolio\"]";
@@ -30,8 +16,6 @@ public class WebAutMobTestPage extends BasePage {
     private static String xpathMobileSection = "//div[@id=\"team-tab-three-body\"]";
     private static String xpathUnderlieMobile = "//div[@id=\"main-content\"]/div[@id=\"et-boc\"]/div/div/div/div[3]";
     private static String xpathButtonFlayer = "//a[text()=\"Flyer Find the Bug Session\"]";
-
-
 
     public static void webAutMobTestPage() {
 
@@ -44,7 +28,7 @@ public class WebAutMobTestPage extends BasePage {
         Boolean verifyPortfolioHighlighted = false;
 
         String color = driver.findElement(By.xpath(xpathPortfolio)).getCssValue("color");
-        System.out.println(color);
+
         if (color.contains("130, 186, 69")) {
             verifyPortfolioHighlighted = true;
         };
@@ -90,48 +74,43 @@ public class WebAutMobTestPage extends BasePage {
         return downloadlink;
     }
 
-    public static Boolean file() {
+    public static boolean file() throws InterruptedException {
 
-        Boolean file = false;
-        driver.get("https://qualityminds.de/app/uploads/2018/11/Find-The-Mobile-Bug-Session.pdf");
-        log.info("Go to dowloaded link");
+        boolean file = false;
 
-//        try {
-//            robot().keyPress(KeyEvent.VK_ENTER);
-//            robot().keyRelease(KeyEvent.VK_ENTER);
-//            log.info("Accept system popup save-as");
-//        } catch (Exception e) {
-//            log.info("Not visible system popup save-as");
-//        }
+        driver.findElement(By.xpath(xpathButtonFlayer)).click();
+        log.info("Go to dowloaded link by button");
+
+        Thread.sleep(5000);
 
         try {
 
-            //File folder = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\");
             File folder = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\files\\");
             File[] listOfFiles = folder.listFiles();
             String fileName;
 
-
             int count = 0;
-            //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
             do {
+
                 for (int i = 0; i < listOfFiles.length; i++) {
+
                     if (listOfFiles[i].isFile()) {
                         fileName = listOfFiles[i].getName();
-                        if (fileName.equals("Find-The-Mobile-Bug-Session.pdf")) {
+
+                        if (fileName.equals("Find-The-Mobile-Bug-Session.pdf") || fileName.equals("FLYER FIND THE BUG SESSION.pdf")) {
 
                             log.info("File " + fileName);
                             count = 10;
                             file = true;
-
                             listOfFiles[i].delete();
 
-                        } else {
-                            count++;
-                        }
+                        } else { count++; }
                     }
                 }
+
                 Thread.sleep(1000);
+
             } while (listOfFiles.length == 0 || count < 10);
 
         } catch (Exception e) {
