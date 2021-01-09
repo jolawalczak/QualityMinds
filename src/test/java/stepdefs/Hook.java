@@ -16,7 +16,7 @@ public class Hook extends BaseTest{
 
 
     @After
-    public static void tearDownTest(Scenario scenario) throws IOException {
+    public static void tearDownTest() {
         stopDriver();
     }
 

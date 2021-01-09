@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import utilities.BasePage;
 
 import java.awt.*;
+import java.util.List;
 
 import static utilities.UploadFile.uploadFile;
 
@@ -14,8 +15,9 @@ public class ApplicationForm extends BasePage {
 
     private static String xpathApplicationForm = "//form//h3[text()=\"Deine Daten\"]";
     private static String xpathJetzt = "//input[@value=\"Jetzt Bewerben\"]";
-    private static String xpathValidationMessageFields = "//div[@id=\"CF5bcf0384b847c_1-row-1\"]";
-    private static String xpathValidationMessage = "//span[text()=\"Dies ist ein Pflichtfeld.\"]";
+    private static String xpathFieldInput = "//input[@placeholder]";
+    private static String xpathValidationMessageAll = "//span[@aria-live=\"polite\"]/span";
+    private static String xpathFieldFrame = "//div[@id=\"CF5bcf0384b847c_1-row-1\"]/div/div";
     private static String xpathVorname = "//input[@placeholder=\"Vorname*\"]";
     private static String xpathNachname = "//input[@placeholder=\"Nachname*\"]";
     private static String xpathEmail = "//input[@placeholder=\"Email*\"]";
@@ -38,28 +40,44 @@ public class ApplicationForm extends BasePage {
         log.info("Click on Jetzt bewerben button");
 
         try {
-            wait5Multi(xpathValidationMessage);
-            log.info("Message is not be submitted");
+            wait5Multi(xpathValidationMessageAll);
+            log.info("Message is not submitted");
         } catch (Exception e) { log.info("Not visible validation messages"); }
 
     }
 
     public static void validationMessages() {
 
-        Boolean validationMessagesNotDisplayed = false;
+            wait5Multi(xpathValidationMessageAll);
+            List<WebElement> fieldFrames = driver.findElements(By.xpath(xpathFieldFrame));
 
-        for (int i = 1; i<=3; i++) {
-            try {
-                WebElement message = driver.findElement(By.xpath(xpathValidationMessageFields + "//div[" + i + "]" + xpathValidationMessage));
-                if (i==1) { log.info("Validation message was displayed for Vorname field"); }
-                if (i==2) { log.info("Validation message was displayed for Nachname field"); }
-                if (i==3) { log.info("Validation message was displayed for Email field"); }
-            } catch (Exception e) {
-                validationMessagesNotDisplayed = true;
+            int numberOfMessages = 0;
+
+            for (int i = 1; i<=fieldFrames.size(); i++) {
+
+                try {
+
+                    String messageText = driver.findElement(By.xpath(xpathFieldFrame + "[" + i + "]" + xpathValidationMessageAll)).getText();
+                    String typeFieldName = driver.findElement(By.xpath(xpathFieldFrame + "[" + i + "]" + xpathFieldInput)).getAttribute("placeholder");
+
+                    if (typeFieldName.contains("Vorname") && messageText.contains("Dies ist ein Pflichtfeld.")) {
+                        log.info("Validation message were displayed for Vorname field");
+                        numberOfMessages++;
+                    }
+                    if (typeFieldName.contains("Nachname") && messageText.contains("Dies ist ein Pflichtfeld.")) {
+                        log.info("Validation message were displayed for Nachname field");
+                        numberOfMessages++;
+                    }
+                    if (typeFieldName.contains("Email") && (messageText.contains("Die Eingabe muss eine gültige E-Mail-Adresse sein.") || messageText.contains("Dies ist ein Pflichtfeld."))) {
+                        log.info("Validation message were displayed for Email field");
+                        numberOfMessages++;
+                    }
+
+                } catch (Exception e) {}
             }
-        }
 
-        if(!validationMessagesNotDisplayed) { log.info("Validation messages were displayed for 3 fields"); }
+        if (numberOfMessages==3) {
+            log.info("Validation messages were displayed for 3 fields"); }
 
     }
 

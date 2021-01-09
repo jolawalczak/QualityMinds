@@ -31,9 +31,7 @@ public class BaseTest {
                 driver.manage().window().maximize();
         }
 
-
         public static void stopDriver() {
-
                 if (driver != null) driver.quit();
         }
 }

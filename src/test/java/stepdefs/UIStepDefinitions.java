@@ -60,7 +60,6 @@ public class UIStepDefinitions {
     public void go_to_portfolio_and_verify() throws InterruptedException {
         Boolean display = MainPage.goToPortfolio();
         assertThat(display).isEqualTo(true);
-        log.info("Submenu is displayed");
     }
 
     @And("^Click on Web, Automation & Mobile Testing sub option$")

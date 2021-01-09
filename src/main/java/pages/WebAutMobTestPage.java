@@ -70,7 +70,7 @@ public class WebAutMobTestPage extends BasePage {
 
     public static WebElement downloadLink() {
         WebElement downloadlink = driver.findElement(By.xpath(xpathButtonFlayer));
-        log.info("Verify the download link");
+        log.info("Verify the download link for the flyer");
         return downloadlink;
     }
 
@@ -100,10 +100,12 @@ public class WebAutMobTestPage extends BasePage {
 
                         if (fileName.equals("Find-The-Mobile-Bug-Session.pdf") || fileName.equals("FLYER FIND THE BUG SESSION.pdf")) {
 
-                            log.info("File " + fileName);
+                            log.info("File " + fileName + " exist in downloaded folder");
                             count = 10;
                             file = true;
+
                             listOfFiles[i].delete();
+                            log.info("Delete downloaded file");
 
                         } else { count++; }
                     }
